@@ -7,8 +7,9 @@ public class tankController : MonoBehaviour
     // Tank movement variables
     public float moveSpeed = 5f;
     public float rotationSpeed = 180f;
-    Vector3 point = new Vector3();
     // Tank firing variables
+    Vector3 mousePos = new Vector3();
+    Vector3 moosePos = new Vector3();
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float fireRate = 0.5f;
@@ -28,7 +29,10 @@ public class tankController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(point);
+       
+        var mousePos = Input.mousePosition;
+        mousePos.z = 10;
+        moosePos = Camera.main.ScreenToWorldPoint(mousePos);
         // Tank movement input
         float moveInput = Input.GetAxis("Vertical");
         float rotateInput = Input.GetAxis("Horizontal");
@@ -38,8 +42,9 @@ public class tankController : MonoBehaviour
         rb.angularVelocity = -rotateInput * rotationSpeed;
 
         // Tank firing
+       
         fireTimer += Time.deltaTime;
-        if (Input.GetKey(KeyCode.Space) && fireTimer >= fireRate)
+        if (Input.GetMouseButtonDown(0)) 
         {
             Fire();
             fireTimer = 0f;
@@ -48,16 +53,9 @@ public class tankController : MonoBehaviour
 
     void Fire()
     {
-
-        // Calculate the direction vector between the firePoint position and the mouse position
-        Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - firePoint.position;
-
-        // Instantiate a bullet and set its position and rotation
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        bullet.transform.up = direction.normalized;
-
-        // Apply a force to the bullet rigidbody in the calculated direction
-        bullet.GetComponent<Rigidbody2D>().AddForce(direction.normalized * bulletSpeed, ForceMode2D.Impulse);
+        Vector2 direction = moosePos - firePoint.position;
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity) as GameObject;
+        bullet.GetComponent<Rigidbody2D>().velocity =  direction.normalized * bulletSpeed;
     }
     // Start is called before the first frame update
 }
