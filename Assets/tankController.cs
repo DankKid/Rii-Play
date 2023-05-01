@@ -15,6 +15,7 @@ public class tankController : MonoBehaviour
     public float fireRate = 0.5f;
     private float fireTimer = 0f;
     public float bulletSpeed = 1;
+    public Transform bulletParent;
 
     // Rigidbody2D component reference
     private Rigidbody2D rb;
@@ -44,7 +45,7 @@ public class tankController : MonoBehaviour
         // Tank firing
        
         fireTimer += Time.deltaTime;
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0) && bulletParent.childCount<5) 
         {
             Fire();
             fireTimer = 0f;
@@ -54,8 +55,10 @@ public class tankController : MonoBehaviour
     void Fire()
     {
         Vector2 direction = moosePos - firePoint.position;
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity) as GameObject;
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity, bulletParent) as GameObject;
         bullet.GetComponent<Rigidbody2D>().velocity =  direction.normalized * bulletSpeed;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward) * Quaternion.Euler(0, 0, -90);
     }
     // Start is called before the first frame update
 }

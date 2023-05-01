@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2674620818136567766}
   - component: {fileID: 7099335998844231117}
   - component: {fileID: 4916010579495168375}
-  - component: {fileID: 713674713603480126}
+  - component: {fileID: 3681960075225056375}
   m_Layer: 0
   m_Name: bullet
   m_TagString: Bullet
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 752df6822991cd24b995582deaafc1ec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 200a292a2f464dc4eb4a2aa2eb031da8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,7 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 880c332a0adb11a45b501fe7aad70cbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 1
+  explosion: {fileID: 7820084525654110087, guid: 4e4400bf57ad4a946ba1f4fa2b1186bb, type: 3}
+  bulletSpeed: 5
+  maxBounce: 1
+  currentBounce: 0
 --- !u!50 &4916010579495168375
 Rigidbody2D:
   serializedVersion: 4
@@ -120,9 +123,9 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!61 &713674713603480126
-BoxCollider2D:
+  m_Constraints: 4
+--- !u!70 &3681960075225056375
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -135,15 +138,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.48, y: 0.48}
-    newSize: {x: 0.48, y: 0.48}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.33, y: 0.34}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.5, y: 1.25}
+  m_Direction: 0
