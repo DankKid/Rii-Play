@@ -4,26 +4,24 @@ using UnityEngine;
 
 public class Reflection : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    private Rigidbody2D bulletRigidbody;
+    public float bulletSpeed = 10f;
 
-    private void Start()
+    void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        bulletRigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Wall")
         {
             ContactPoint2D contactPoint = collision.contacts[0];
-            Vector2 reflectDirection = Vector2.Reflect(rb.velocity.normalized, contactPoint.normal);
-            rb.velocity = reflectDirection * rb.velocity.magnitude;
+            Vector2 bulletVelocity = bulletRigidbody.velocity;
+            Vector2 reflectionVector = Vector2.Reflect(bulletVelocity.normalized, contactPoint.normal);
+            //Debug.Log("Bullet velocity: " + bulletVelocity);
+            //Debug.Log("Reflection vector: " + reflectionVector);
+            bulletRigidbody.velocity = reflectionVector * bulletSpeed;
         }
-    }
-
-    private void FixedUpdate()
-    {
-        transform.position += (Vector3)rb.velocity * Time.fixedDeltaTime;
-        transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg);
     }
 }
