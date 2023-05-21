@@ -7,6 +7,7 @@ public class TitleManager : MonoBehaviour
 {
     [SerializeField] List<GameObject> buttons = new List<GameObject>();
     [SerializeField] List<GameObject> scores = new List<GameObject>();
+    public List<int> rangeScoreValues, findScoreValues, tennisScoreValues, poseScoreValues, hockeyScoreValues, billiardsScoreValues, fishingScoreValues, cowScoreValues, tankScoreValues;
     // Start is called before the first frame update
     void Start()
     {
